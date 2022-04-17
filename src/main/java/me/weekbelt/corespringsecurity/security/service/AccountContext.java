@@ -1,18 +1,18 @@
 package me.weekbelt.corespringsecurity.security.service;
 
-import java.util.Collection;
-import lombok.Getter;
-import me.weekbelt.corespringsecurity.domain.Account;
+import java.util.List;
+import lombok.Data;
+import me.weekbelt.corespringsecurity.domain.entity.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-@Getter
+@Data
 public class AccountContext extends User {
 
-    private final Account account;
+    private Account account;
 
-    public AccountContext(Account account, Collection<? extends GrantedAuthority> authorities) {
-        super(account.getUsername(), account.getPassword(), authorities);
+    public AccountContext(Account account, List<GrantedAuthority> roles) {
+        super(account.getUsername(), account.getPassword(), roles);
         this.account = account;
     }
 }

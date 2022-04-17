@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FormWebAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> {
-
     @Override
-    public WebAuthenticationDetails buildDetails(HttpServletRequest context) {
-        return new FormWebAuthenticationDetails(context);
+    public WebAuthenticationDetails buildDetails(HttpServletRequest request) {
+        return new FormWebAuthenticationDetails(request);
     }
 }

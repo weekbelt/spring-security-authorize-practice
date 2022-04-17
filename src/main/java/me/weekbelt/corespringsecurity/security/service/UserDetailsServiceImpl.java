@@ -1,9 +1,10 @@
 package me.weekbelt.corespringsecurity.security.service;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import me.weekbelt.corespringsecurity.domain.Account;
+import me.weekbelt.corespringsecurity.domain.entity.Account;
 import me.weekbelt.corespringsecurity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,8 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service("userDetailService")
-public class UserDetailServiceImpl implements UserDetailsService {
+@Service("userDetailsService")
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -31,10 +32,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 throw new UsernameNotFoundException("No user found with username: " + username);
             }
         }
-        ArrayList<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
-        roles.add(new SimpleGrantedAuthority(account.getRole()));
+        List<GrantedAuthority> collect = account.getUserRoles()
+            .stream()
+            .map(userRole -> userRole.getRoleName())
+            .collect(Collectors.toSet())
+            .stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
-        return new AccountContext(account, roles);
+        //List<GrantedAuthority> collect = userRoles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return new AccountContext(account, collect);
     }
-
 }

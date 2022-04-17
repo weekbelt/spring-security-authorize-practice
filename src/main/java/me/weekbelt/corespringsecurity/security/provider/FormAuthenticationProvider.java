@@ -1,7 +1,7 @@
 package me.weekbelt.corespringsecurity.security.provider;
 
 import javax.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.weekbelt.corespringsecurity.security.common.FormWebAuthenticationDetails;
 import me.weekbelt.corespringsecurity.security.service.AccountContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@RequiredArgsConstructor
+@Slf4j
 public class FormAuthenticationProvider implements AuthenticationProvider {
+
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -31,7 +32,7 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
         String loginId = authentication.getName();
         String password = (String) authentication.getCredentials();
 
-        AccountContext accountContext = (AccountContext)userDetailsService.loadUserByUsername(loginId);
+        AccountContext accountContext = (AccountContext) userDetailsService.loadUserByUsername(loginId);
 
         if (!passwordEncoder.matches(password, accountContext.getPassword())) {
             throw new BadCredentialsException("Invalid password");

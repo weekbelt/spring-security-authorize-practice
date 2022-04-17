@@ -1,7 +1,6 @@
 package me.weekbelt.corespringsecurity.repository;
 
-import java.util.Optional;
-import me.weekbelt.corespringsecurity.domain.Account;
+import me.weekbelt.corespringsecurity.domain.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<Account, Long> {

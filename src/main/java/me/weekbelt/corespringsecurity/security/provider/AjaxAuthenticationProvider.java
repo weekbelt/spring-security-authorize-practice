@@ -1,7 +1,7 @@
 package me.weekbelt.corespringsecurity.security.provider;
 
 import javax.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.weekbelt.corespringsecurity.security.service.AccountContext;
 import me.weekbelt.corespringsecurity.security.token.AjaxAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@RequiredArgsConstructor
+@Slf4j
 public class AjaxAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
